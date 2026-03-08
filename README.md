@@ -2,7 +2,7 @@
 
 一个跨平台的电台播放客户端（基于 Tauri + Vite）。
 
-![电台播放器预览](screenshots/preview.png)
+![电台播放器预览](https://github.com/sailsxq/Radio-Player/blob/main/screenshots/preview.PNG)
 
 ## 📻 数据配置说明 (重要)
 
