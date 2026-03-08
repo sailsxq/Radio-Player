@@ -2,6 +2,8 @@
 
 一个跨平台的电台播放客户端（基于 Tauri + Vite）。
 
+![电台播放器预览](screenshots/preview.png)
+
 ## 📻 数据配置说明 (重要)
 
 本项目为开源项目，**不自带真实的电台源数据**。为了让程序正常运行，你需要自行准备电台数据文件。
@@ -14,7 +16,6 @@
 4. **例如：** 如果你想添加北京的电台，请新建 `beijing_radio_stations.json` 并填入真实的流媒体地址。
 5. 包含的分类或者省份请参考 `src/main.js` 中的 `provinceFileMap` 和 `categoryFileMap` 变量映射来进行命名。
 
-> **注意：** 所有的 `*_radio_stations.json` 文件均已被加入 `.gitignore`，我们在提交代码时不用担心把自己的私人源地址泄露到 GitHub 上。
 
 ## 开发指南
 
