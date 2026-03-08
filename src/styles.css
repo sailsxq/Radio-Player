@@ -1,0 +1,843 @@
+/* ==================== 设计系统 ==================== */
+:root {
+  /* 颜色系统 */
+  --primary-color: #e74c3c;
+  --primary-hover: #c0392b;
+  --primary-light: rgba(231, 76, 60, 0.1);
+
+  --bg-primary: #f5f6f8;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-player: #333333;
+
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --text-muted: #bdc3c7;
+  --text-light: #ffffff;
+
+  --border-color: #ecf0f1;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* 过渡 */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ==================== 重置样式 ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* ==================== 应用容器 ==================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ==================== 顶部导航 ==================== */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-fast);
+}
+
+.nav-tab:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.nav-tab.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-tab .tab-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.nav-tab .dropdown-icon {
+  display: none;
+  /* 隐藏自定义下拉箭头，使用原生select控件的箭头 */
+}
+
+.province-select {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  /* 移除 appearance: none 确保下拉框可以正常工作 */
+  padding: 4px 8px;
+  margin: 0;
+  position: relative;
+  z-index: 10;
+  min-width: 60px;
+}
+
+.province-select option {
+  background: white;
+  color: var(--text-primary);
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 12px;
+}
+
+.nav-right .slogan {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.nav-right .user-count {
+  color: var(--primary-color);
+  opacity: 0.7;
+}
+
+/* ==================== 主内容区域 ==================== */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+}
+
+/* ==================== 电台网格 ==================== */
+.radio-grid-section {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: var(--spacing-sm);
+}
+
+.radio-grid-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.radio-grid-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.radio-grid-section::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.radio-grid-section::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* ==================== 电台卡片 ==================== */
+.radio-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.radio-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), #f39c12);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-normal);
+}
+
+.radio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.radio-card:hover::before {
+  transform: scaleX(1);
+}
+
+.radio-card .card-avatar {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.radio-card .card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.radio-card .card-avatar .placeholder-text {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  padding: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+.radio-card .play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.radio-card:hover .play-overlay {
+  opacity: 1;
+}
+
+.radio-card .play-overlay svg {
+  width: 48px;
+  height: 48px;
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.radio-card .card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.radio-card .card-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.radio-card .card-subtitle::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #27ae60;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.radio-card .card-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: var(--spacing-sm);
+}
+
+.radio-card .card-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.radio-card .card-stats svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==================== 侧边栏 ==================== */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.sidebar-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.refresh-btn:hover {
+  color: var(--primary-color);
+}
+
+.refresh-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==================== 热播/历史列表项 ==================== */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.list-item:hover {
+  background: var(--primary-light);
+}
+
+.list-item .item-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.list-item .item-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.list-item .item-avatar .avatar-text {
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.list-item .item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-item .item-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.list-item .item-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-item .item-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ==================== 播放控制栏 ==================== */
+.player-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--bg-player);
+  flex-shrink: 0;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.control-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.control-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.control-btn.play-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color);
+  margin: 0 var(--spacing-sm);
+}
+
+.control-btn.play-btn:hover {
+  background: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.control-btn.play-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ==================== 播放器信息 ==================== */
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-width: 200px;
+}
+
+.station-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.station-avatar svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.station-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.station-details {
+  min-width: 0;
+}
+
+.station-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.station-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==================== 进度条 ==================== */
+.progress-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  max-width: 500px;
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 88%;
+  background: linear-gradient(90deg, var(--primary-color), #f39c12);
+  border-radius: 2px;
+  transition: width var(--transition-fast);
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ==================== 播放器操作按钮 ==================== */
+.player-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.volume-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-light);
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.volume-value {
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 35px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 240px;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    display: none;
+  }
+
+  .radio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-right {
+    display: none;
+  }
+
+  .player-bar {
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .progress-section {
+    display: none;
+  }
+
+  .volume-control {
+    display: none;
+  }
+}
+
+/* ==================== 动画效果 ==================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.radio-card {
+  animation: fadeIn 0.4s ease backwards;
+}
+
+.radio-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.radio-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.radio-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.radio-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.radio-card:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.radio-card:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.radio-card:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.radio-card:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.radio-card:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+.radio-card:nth-child(10) {
+  animation-delay: 0.5s;
+}
+
+.radio-card:nth-child(11) {
+  animation-delay: 0.55s;
+}
+
+.radio-card:nth-child(12) {
+  animation-delay: 0.6s;
+}
+
+/* ==================== 正在播放状态 ==================== */
+.radio-card.playing {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+}
+
+.radio-card.playing::before {
+  transform: scaleX(1);
+  animation: playingPulse 2s ease-in-out infinite;
+}
+
+.radio-card.playing .card-subtitle::before {
+  background: var(--primary-color);
+  animation: pulse 1s infinite;
+}
+
+@keyframes playingPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ==================== 加载动画 ==================== */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+}
+
+.loading::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

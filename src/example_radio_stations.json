@@ -1,0 +1,19 @@
+{
+  "name": "省份或分类名称，例如：北京",
+  "id": "1",
+  "url": "来源链接（可选）",
+  "radios": [
+    {
+      "name": "电台名称，例如：北京交通广播",
+      "province": "所属省份或分类，例如：北京",
+      "link": "电台主页链接可留空",
+      "stream_url": "此处填写真实的电台网络流媒体播放地址，如 http://.../live.m3u8"
+    },
+    {
+      "name": "这是一个示例电台",
+      "province": "广东",
+      "link": "",
+      "stream_url": "http://example.com/stream.mp3"
+    }
+  ]
+}

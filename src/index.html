@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电台播放器</title>
+  <script type="module" src="main.js" defer></script>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- 顶部导航栏 -->
+    <header class="top-nav">
+      <div class="nav-tabs">
+        <label class="nav-tab active">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <select id="provinceSelect" class="province-select">
+            <option value="北京">北京</option>
+            <option value="天津">天津</option>
+            <option value="河北">河北</option>
+            <option value="山西">山西</option>
+            <option value="内蒙古">内蒙古</option>
+            <option value="辽宁">辽宁</option>
+            <option value="吉林">吉林</option>
+            <option value="黑龙江">黑龙江</option>
+            <option value="上海">上海</option>
+            <option value="江苏">江苏</option>
+            <option value="浙江">浙江</option>
+            <option value="安徽">安徽</option>
+            <option value="福建">福建</option>
+            <option value="江西">江西</option>
+            <option value="山东">山东</option>
+            <option value="河南">河南</option>
+            <option value="湖北">湖北</option>
+            <option value="湖南">湖南</option>
+            <option value="广东">广东</option>
+            <option value="广西">广西</option>
+            <option value="海南">海南</option>
+            <option value="重庆">重庆</option>
+            <option value="四川">四川</option>
+            <option value="贵州">贵州</option>
+            <option value="云南">云南</option>
+            <option value="西藏">西藏</option>
+            <option value="陕西">陕西</option>
+            <option value="甘肃">甘肃</option>
+            <option value="青海">青海</option>
+            <option value="宁夏">宁夏</option>
+            <option value="新疆">新疆</option>
+          </select>
+          <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6,9 12,15 18,9" />
+          </svg>
+        </label>
+        <button class="nav-tab" id="networkRadioBtn">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+          </svg>
+          网络台
+        </button>
+        <label class="nav-tab">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          <select id="categorySelect" class="province-select">
+            <option value="">分类</option>
+            <option value="综合台">综合台</option>
+            <option value="音乐台">音乐台</option>
+            <option value="交通台">交通台</option>
+            <option value="资讯台">资讯台</option>
+            <option value="经济台">经济台</option>
+            <option value="都市台">都市台</option>
+            <option value="生活台">生活台</option>
+            <option value="文艺台">文艺台</option>
+            <option value="旅游台">旅游台</option>
+            <option value="方言台">方言台</option>
+            <option value="曲艺台">曲艺台</option>
+            <option value="体育台">体育台</option>
+            <option value="双语台">双语台</option>
+          </select>
+          <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6,9 12,15 18,9" />
+          </svg>
+        </label>
+      </div>
+      <div class="nav-right">
+        <span class="slogan">听广播/听音乐/听新闻</span>
+        <span class="user-count">4.5亿用户的选择</span>
+      </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <!-- 电台网格 -->
+      <section class="radio-grid-section">
+        <div class="radio-grid" id="radioGrid">
+          <!-- 电台卡片将通过JS动态生成 -->
+        </div>
+      </section>
+
+      <!-- 右侧边栏 -->
+      <aside class="sidebar">
+        <!-- 正在热播 -->
+        <div class="sidebar-section">
+          <div class="section-header">
+            <h3>正在热播</h3>
+            <button class="refresh-btn">
+              换一批
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6" />
+                <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" />
+              </svg>
+            </button>
+          </div>
+          <div class="hot-list" id="hotList">
+            <!-- 热播列表将通过JS动态生成 -->
+          </div>
+        </div>
+
+        <!-- 听回听 -->
+        <div class="sidebar-section">
+          <div class="section-header">
+            <h3>听回听</h3>
+            <button class="refresh-btn">
+              换一批
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6" />
+                <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" />
+              </svg>
+            </button>
+          </div>
+          <div class="history-list" id="historyList">
+            <!-- 历史列表将通过JS动态生成 -->
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- 底部播放控制栏 -->
+    <footer class="player-bar">
+      <div class="player-controls">
+        <button class="control-btn" id="prevBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+          </svg>
+        </button>
+        <button class="control-btn play-btn" id="playBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none;">
+            <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+          </svg>
+        </button>
+        <button class="control-btn" id="nextBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="player-info">
+        <div class="station-avatar" id="currentStationAvatar">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+          </svg>
+        </div>
+        <div class="station-details">
+          <div class="station-name" id="currentStationName">931超级音乐</div>
+          <div class="station-description" id="currentStationDesc">西安音乐广播</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="time-display">
+          <span id="currentTime">21:10:55</span>
+          <span>/</span>
+          <span id="totalTime">23:59:59</span>
+        </div>
+      </div>
+
+      <div class="player-actions">
+        <div class="volume-control">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="volume-icon">
+            <path
+              d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          </svg>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+          <span class="volume-value">x 1.0</span>
+        </div>
+        <button class="action-btn" title="打开新窗口">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+            <polyline points="15,3 21,3 21,9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </button>
+        <button class="action-btn" title="下载">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+            <polyline points="7,10 12,15 17,10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+        </button>
+        <button class="action-btn" title="定时">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12,6 12,12 16,14" />
+          </svg>
+        </button>
+        <button class="action-btn" title="播放列表">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6" />
+            <line x1="8" y1="12" x2="21" y2="12" />
+            <line x1="8" y1="18" x2="21" y2="18" />
+            <line x1="3" y1="6" x2="3.01" y2="6" />
+            <line x1="3" y1="12" x2="3.01" y2="12" />
+            <line x1="3" y1="18" x2="3.01" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>
